@@ -24,6 +24,7 @@ public class BlazeWeapon extends Item{
 		
 		enemyEntity.hurt(DamageSources.generic(), 1);
 		
+		
 	    return true;
 	}
 }
