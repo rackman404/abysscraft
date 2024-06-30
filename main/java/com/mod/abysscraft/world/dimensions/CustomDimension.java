@@ -5,7 +5,6 @@ import java.util.OptionalLong;
 
 import com.mod.abysscraft.AbyssCraft;
 import com.mod.abysscraft.world.biomes.CustomBiomes;
-import com.mod.abysscraft.world.worldgensettings.CustomWorldGen;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.core.HolderGetter;
@@ -107,8 +106,8 @@ public class CustomDimension {
                                         Climate.parameters(0.4F, 0.3F, 0.2F, 0.1F, 0.0F, 0.0F, 0.0F), biomeRegistry.getOrThrow(Biomes.DARK_FOREST))
 
                         ))),
-        		noiseGenSettings.getOrThrow(CustomWorldGen.LAYERONE_GEN_SETTINGS));
-                //noiseGenSettings.getOrThrow(NoiseGeneratorSettings.END));
+        		//noiseGenSettings.getOrThrow(CustomWorldGen.LAYERONE_GEN_SETTINGS));
+                noiseGenSettings.getOrThrow(NoiseGeneratorSettings.END));
 
         LevelStem stem = new LevelStem(dimTypes.getOrThrow(CustomDimension.LAYERONE_DIM_TYPE), noiseBasedChunkGenerator);
 

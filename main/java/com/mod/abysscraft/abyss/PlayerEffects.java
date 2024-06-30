@@ -2,6 +2,7 @@ package com.mod.abysscraft.abyss;
 
 
 import com.mod.abysscraft.init.SoundInit;
+import com.mod.abysscraft.world.dimensions.CustomDimension;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.ChatComponent;
@@ -44,7 +45,10 @@ public class PlayerEffects {
 			return;
 		}
 		
-			
+		if(CustomDimension.LAYERONE_DIM_TYPE == player.level().dimensionTypeId()){ //for if i switch to checking dimensions instead of height
+
+		}
+		
 		
 		if (this.deltaHeight <= this.threshold && (this.previousHeight - this.currentHeight < 0)) { //if player is trying to go up and threshold was reached
 			this.deltaHeight = 0;
@@ -54,16 +58,15 @@ public class PlayerEffects {
 				player.displayClientMessage(Component.literal("Curse of the Abyss first layer effects triggered"), true);
 				
 				Minecraft.getInstance().getSoundManager().stop(); //stop all previous music from playing
-				player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundInit.TELEPORT_TO_FIRST_LAYER.get() , SoundSource.PLAYERS, 10.0f, 1.0f);
-
+				player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundInit.TELEPORT_TO_FIRST_LAYER.get() , SoundSource.PLAYERS, 100.0f, 1.0f);
 				
 				player.addEffect((new MobEffectInstance(MobEffects.WEAKNESS, 200, 0, false, true, true)), player); //layer 0 effect
+
 			}
 			else if (this.currentHeight < -100) {
 				player.displayClientMessage(Component.literal("Curse of the Abyss second layer effects triggered"), true);
 				
-				player.addEffect((new MobEffectInstance(MobEffects.CONFUSION, 200, 0, false, true, true)), player); //layer 0 effect
-				player.addEffect((new MobEffectInstance(MobEffects.WEAKNESS, 200, 0, false, true, true)), player); //layer 1 effect
+				player.addEffect((new MobEffectInstance(MobEffects.CONFUSION, 200, 0, false, true, true)), player); //layer 1 effect
 			}
 			
 		}

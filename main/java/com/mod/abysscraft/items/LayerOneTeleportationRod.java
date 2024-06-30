@@ -45,7 +45,7 @@ public class LayerOneTeleportationRod extends Item{
 			
 			player.teleportTo(newDimension, 0, 100, 0, null, 0, 0);
 
-			
+			/*
 			if (newDimension != null && !player.isPassenger()) {
                 if(resourcekey == CustomDimension.LAYERONE_LEVEL_KEY) {
                    // player.changeDimension(newDimension, new CustomTeleporter(player.blockPosition(), true));
@@ -56,6 +56,7 @@ public class LayerOneTeleportationRod extends Item{
                     //player.changeDimension(newDimension, new CustomTeleporter(player.blockPosition(), false));
                 }
             }
+            */
 			
 		}
 		
