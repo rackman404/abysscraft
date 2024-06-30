@@ -15,9 +15,9 @@
   },
   "noise": {
     "min_y": -512,
-    "height": 768,
-    "size_horizontal": 1,
-    "size_vertical": 1
+    "height": 1072,
+    "size_horizontal": 2,
+    "size_vertical": 2
   },
   "noise_router": {
     "barrier": 0,
@@ -36,43 +36,50 @@
       "argument1": {
         "type": "minecraft:spline",
         "spline": {
-            "coordinate": {
+          "coordinate": {
+            "type": "minecraft:add",
+            "argument1": "minecraft:overworld/base_3d_noise",
+            "argument2": {
+              "type": "minecraft:interpolated",
+              "argument": {
                 "type": "minecraft:end_islands"
-            },
-            "points": [
-                {
-                    "location": 0,
-                    "derivative": -1,
-                    "value": {
-                        "coordinate": {
-                            "type": "minecraft:add",
-                            "argument1": {
-                                "type": "minecraft:noise",
-                                "noise": "minecraft:surface",
-                                "xz_scale": -0.1,
-                                "y_scale": 0.25
-                            },
-                            "argument2": {
-                                "type": "minecraft:mul",
-                                "argument1": {
-                                    "type": "minecraft:noise",
-                                    "noise": "minecraft:spaghetti_3d_2",
-                                    "xz_scale": 6,
-                                    "y_scale": 6
-                                },
-                                "argument2": "minecraft:nether/base_3d_noise"
-                            }
-                        },
-                        "points": [
-                            {
-                                "location": 1,
-                                "derivative": 1.4,
-                                "value": 1
-                            }
-                        ]
-                    }
-                }
-            ]
+              }
+            }
+          },
+          "points": [
+            {
+              "location": 0,
+              "derivative": -1,
+              "value": {
+                "coordinate": {
+                  "type": "minecraft:min",
+                  "argument1": {
+                    "type": "minecraft:noise",
+                    "noise": "minecraft:surface",
+                    "xz_scale": -0.1,
+                    "y_scale": 0.1
+                  },
+                  "argument2": {
+                    "type": "minecraft:mul",
+                    "argument1": {
+                      "type": "minecraft:noise",
+                      "noise": "minecraft:spaghetti_3d_2",
+                      "xz_scale": 6,
+                      "y_scale": 6
+                    },
+                    "argument2": "minecraft:nether/base_3d_noise"
+                  }
+                },
+                "points": [
+                  {
+                    "location": 1,
+                    "derivative": 1.6,
+                    "value": 1
+                  }
+                ]
+              }
+            }
+          ]
         }
       },
       "argument2": {
