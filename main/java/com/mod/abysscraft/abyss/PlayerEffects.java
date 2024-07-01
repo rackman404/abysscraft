@@ -57,6 +57,7 @@ public class PlayerEffects {
 				
 				player.displayClientMessage(Component.literal("Curse of the Abyss first layer effects triggered"), true);
 				
+				//debug music
 				Minecraft.getInstance().getSoundManager().stop(); //stop all previous music from playing
 				player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundInit.TELEPORT_TO_FIRST_LAYER.get() , SoundSource.PLAYERS, 100.0f, 1.0f);
 				

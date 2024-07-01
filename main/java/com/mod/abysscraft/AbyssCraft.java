@@ -33,6 +33,7 @@ import net.minecraftforge.registries.RegistryObject;
 import org.slf4j.Logger;
 
 import com.mod.abysscraft.init.SoundInit;
+import com.mod.abysscraft.init.WorldGenInit;
 import com.mod.abysscraft.init.ItemInit;
 import com.mod.abysscraft.init.MobInit;
 
@@ -70,6 +71,7 @@ public class AbyssCraft
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
+
 
         // Register the Deferred Register to the mod event bus so blocks get registered
         BLOCKS.register(modEventBus);

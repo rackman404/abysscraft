@@ -5,6 +5,7 @@ import java.util.OptionalLong;
 
 import com.mod.abysscraft.AbyssCraft;
 import com.mod.abysscraft.world.biomes.CustomBiomes;
+import com.mod.abysscraft.world.dimensionspecialeffects.LayerOneDimEffects;
 import com.mojang.datafixers.util.Pair;
 
 import net.minecraft.core.HolderGetter;
@@ -42,24 +43,28 @@ public class CustomDimension {
             new ResourceLocation(AbyssCraft.MODID, "layer_one_level"));
     public static final ResourceKey<DimensionType> LAYERONE_DIM_TYPE = ResourceKey.create(Registries.DIMENSION_TYPE,
             new ResourceLocation(AbyssCraft.MODID, "layeronedim_type"));
+    public static final ResourceLocation LAYERONE_SPECIAL_EFFECTS = new ResourceLocation("layer_one_special_effects");
     
+    //PLACEHOLDER, NEEDED AS A PLACEHOLDER FOR DATA GENERATOR
+    public static final ResourceKey<NoiseGeneratorSettings> LAYERONE_GEN_SETTINGS = ResourceKey.create(Registries.NOISE_SETTINGS,
+            new ResourceLocation(AbyssCraft.MODID, "layer1_gensettings"));
 
 
     public static void bootstrapType(BootstapContext<DimensionType> context) {
         context.register(LAYERONE_DIM_TYPE, new DimensionType(
-                OptionalLong.of(12000), // fixedTime
-                false, // hasSkylight
+                OptionalLong.of(6000), // fixedTime
+                true, // hasSkylight
                 false, // hasCeiling
                 false, // ultraWarm
-                false, // natural
+                true, // natural
                 1.0, // coordinateScale
                 true, // bedWorks
                 false, // respawnAnchorWorks
-                0, // minY
-                256, // height
-                256, // logicalHeight
+                -512, // minY
+                1072, // height
+                1072, // logicalHeight
                 BlockTags.INFINIBURN_OVERWORLD, // infiniburn
-                BuiltinDimensionTypes.OVERWORLD_EFFECTS, // effectsLocation
+                LAYERONE_SPECIAL_EFFECTS, // effectsLocation
                 1.0f, // ambientLight
                 new DimensionType.MonsterSettings(false, false, ConstantInt.of(0), 0)));
     }
@@ -70,25 +75,6 @@ public class CustomDimension {
         HolderGetter<Biome> biomeRegistry = context.lookup(Registries.BIOME);
         HolderGetter<DimensionType> dimTypes = context.lookup(Registries.DIMENSION_TYPE);
         HolderGetter<NoiseGeneratorSettings> noiseGenSettings = context.lookup(Registries.NOISE_SETTINGS);
-        
-        NoiseRouter customNoiseRouter = new NoiseRouter(
-        		DensityFunctions.endIslands(1l) ,
-        		DensityFunctions.endIslands(1l), 
-        		DensityFunctions.endIslands(1l), 
-        		DensityFunctions.endIslands(1l), 
-        		DensityFunctions.endIslands(1l), 
-        		DensityFunctions.endIslands(1l), 
-        		DensityFunctions.endIslands(1l), 
-        		DensityFunctions.endIslands(1l), 
-        		DensityFunctions.endIslands(1l), 
-        		DensityFunctions.endIslands(1l), 
-        		DensityFunctions.endIslands(1l), 
-        		DensityFunctions.endIslands(1l), 
-        		DensityFunctions.endIslands(1l), 
-        		DensityFunctions.endIslands(1l), 
-        		DensityFunctions.endIslands(1l)     	
-        		);
-        		
         		
         NoiseBasedChunkGenerator wrappedChunkGenerator = new NoiseBasedChunkGenerator(
                 new FixedBiomeSource(biomeRegistry.getOrThrow(CustomBiomes.TEST_BIOME)),
@@ -97,17 +83,9 @@ public class CustomDimension {
         NoiseBasedChunkGenerator noiseBasedChunkGenerator = new NoiseBasedChunkGenerator(
         		MultiNoiseBiomeSource.createFromList(
                         new Climate.ParameterList<>(List.of(Pair.of(
-                                        Climate.parameters(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F), biomeRegistry.getOrThrow(CustomBiomes.TEST_BIOME)),
-                                Pair.of(
-                                        Climate.parameters(0.1F, 0.2F, 0.0F, 0.2F, 0.0F, 0.0F, 0.0F), biomeRegistry.getOrThrow(Biomes.BIRCH_FOREST)),
-                                Pair.of(
-                                        Climate.parameters(0.3F, 0.6F, 0.1F, 0.1F, 0.0F, 0.0F, 0.0F), biomeRegistry.getOrThrow(Biomes.OCEAN)),
-                                Pair.of(
-                                        Climate.parameters(0.4F, 0.3F, 0.2F, 0.1F, 0.0F, 0.0F, 0.0F), biomeRegistry.getOrThrow(Biomes.DARK_FOREST))
-
+                                        Climate.parameters(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F), biomeRegistry.getOrThrow(CustomBiomes.TEST_BIOME))
                         ))),
-        		//noiseGenSettings.getOrThrow(CustomWorldGen.LAYERONE_GEN_SETTINGS));
-                noiseGenSettings.getOrThrow(NoiseGeneratorSettings.END));
+                noiseGenSettings.getOrThrow(NoiseGeneratorSettings.FLOATING_ISLANDS));
 
         LevelStem stem = new LevelStem(dimTypes.getOrThrow(CustomDimension.LAYERONE_DIM_TYPE), noiseBasedChunkGenerator);
 
