@@ -38,18 +38,24 @@
         "spline": {
           "coordinate": {
             "type": "minecraft:add",
-            "argument1": "minecraft:overworld/base_3d_noise",
+            "argument1": {
+              "type": "minecraft:square",
+              "argument": "minecraft:end/base_3d_noise"
+            },
             "argument2": {
               "type": "minecraft:interpolated",
               "argument": {
-                "type": "minecraft:end_islands"
+                "type": "minecraft:blend_density",
+                "argument": {
+                  "type": "minecraft:end_islands"
+                }
               }
             }
           },
           "points": [
             {
               "location": 0,
-              "derivative": -1,
+              "derivative": -1.2,
               "value": {
                 "coordinate": {
                   "type": "minecraft:min",
@@ -57,7 +63,7 @@
                     "type": "minecraft:noise",
                     "noise": "minecraft:surface",
                     "xz_scale": -0.1,
-                    "y_scale": 0.65
+                    "y_scale": 0.25
                   },
                   "argument2": {
                     "type": "minecraft:mul",
@@ -73,7 +79,7 @@
                 "points": [
                   {
                     "location": 1,
-                    "derivative": 1.6,
+                    "derivative": 1.4,
                     "value": 1
                   }
                 ]

@@ -1,8 +1,10 @@
 package com.mod.abysscraft.events;
 
 import com.mod.abysscraft.AbyssCraft;
+import com.mod.abysscraft.Capabilities.TickProvider;
 import com.mod.abysscraft.abyss.PlayerEffects;
 import com.mod.abysscraft.abyss.PlayerEffectsProvider;
+import com.mod.abysscraft.items.BlazeWeapon;
 import com.mojang.authlib.minecraft.client.MinecraftClient;
 
 import net.minecraft.client.Minecraft;
@@ -11,6 +13,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.AirBlock;
@@ -123,19 +126,25 @@ public class ModEvents {
 	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (event.side == LogicalSide.SERVER) {
 			event.player.getCapability(PlayerEffectsProvider.PLAYER_EFFECTS).ifPresent(playereffects -> {
-				//code for manipulating test variable
-				//event.player.sendSystemMessage(Component.literal(String.valueOf(event.player.getSpeed())));
 				
 				Level world = event.player.level();
 				
 				playereffects.setCurrentHeight(world, event.player);
 				
-				//System.out.println();
-				//event.player.sendSystemMessage(Component.literal(String.valueOf(temp)));
-				//event.player.getSpeed();
 			});
 			
+			for(int i = 0; i < event.player.getInventory().getContainerSize(); i++){
+			    if(event.player.getInventory().getItem(i).getItem() instanceof BlazeWeapon){
+			    	event.player.getInventory().getItem(i).getCapability(TickProvider.TICKCAPABILITY).ifPresent(ticker -> {
+						
+						ticker.addTicks();
+						
+					});
+			    }
+			}
 		}
+		
+		
 	}
 
 }

@@ -7,7 +7,15 @@
                 "stream": true
             }
         ]
+    },
+
+    "music_first_layer": {
+        "subtitle": "sounds.abysscraft.music.first_layer",
+        "sounds": [
+            {
+                "name":  "abysscraft:music/layer_one/the_first_layer",
+                "stream": true
+            }
+        ]
     }
-
-
 }

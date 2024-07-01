@@ -14,10 +14,10 @@
       "offset": 2
     },
     "music": {
-      "sound": "minecraft:music.overworld.forest",
-      "min_delay": 12000,
-      "max_delay": 24000,
-      "replace_current_music": false
+      "sound": "abysscraft:music_first_layer",
+      "min_delay": 1000,
+      "max_delay": 12000,
+      "replace_current_music": true
     }
   },
   "spawners": {
@@ -111,7 +111,6 @@
   "carvers": {
     "air": [
       "minecraft:cave",
-      "minecraft:cave_extra_underground",
       "minecraft:canyon"
     ]
   },

@@ -2,6 +2,8 @@ package com.mod.abysscraft.items;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import com.mod.abysscraft.AbyssCraft;
+import com.mod.abysscraft.Capabilities.TickProvider;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
@@ -23,9 +25,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
 public class BlazeWeapon extends Item{
 	 private final Multimap<Attribute, AttributeModifier> defaultModifiers;
+	 private int currentTicks = 0;
 	
 	public BlazeWeapon(Properties properties) {
 		super(properties);
@@ -45,21 +49,26 @@ public class BlazeWeapon extends Item{
 	
 	@Override
 	public boolean hurtEnemy(ItemStack thisitem, LivingEntity enemyEntity, LivingEntity PlayerEntity) { 
-		double tickTimeAtHit = PlayerEntity.level().getDayTime();
-		boolean explodedAgain = false;
 		
 		enemyEntity.addEffect((new MobEffectInstance(MobEffects.GLOWING, 200, 0, false, true, true)), enemyEntity);
 		
-		PlayerEntity.level().explode(null, enemyEntity.getX(), enemyEntity.getY()- 0.5f, enemyEntity.getZ(), 2.0F, Level.ExplosionInteraction.TNT);
+		PlayerEntity.level().explode(null, enemyEntity.getX(), enemyEntity.getY()- 0.15f, enemyEntity.getZ(), 1.0F, Level.ExplosionInteraction.TNT);
+		
+
 			
 		thisitem.hurtAndBreak(1, PlayerEntity, e -> {
          e.broadcastBreakEvent(EquipmentSlot.MAINHAND);
 		});
 		
-			
 		
+		//Capability class to be used as a timer. Tick event this capability is used with is done with player tick, therefore nothing happens if weapon is dropped
+		thisitem.getCapability(TickProvider.TICKCAPABILITY).ifPresent(ticker -> {
+			ticker.addEntity(enemyEntity);
+			
+		});
 			
 	    return true;
 	}
+
 }
 
