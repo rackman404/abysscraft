@@ -49,25 +49,24 @@ public class BlazeWeapon extends Item{
 	
 	@Override
 	public boolean hurtEnemy(ItemStack thisitem, LivingEntity enemyEntity, LivingEntity PlayerEntity) { 
+		//enemyEntity.addEffect((new MobEffectInstance(MobEffects.GLOWING, 200, 0, false, true, true)), enemyEntity);
 		
-		enemyEntity.addEffect((new MobEffectInstance(MobEffects.GLOWING, 200, 0, false, true, true)), enemyEntity);
-		
+		//initial boom boom event
+		//TO DO: get or create a directional vector so the explosion actually pushes entity away from player
 		PlayerEntity.level().explode(null, enemyEntity.getX(), enemyEntity.getY()- 0.15f, enemyEntity.getZ(), 1.0F, Level.ExplosionInteraction.TNT);
 		
-
-			
+		//deal normal damage
 		thisitem.hurtAndBreak(1, PlayerEntity, e -> {
          e.broadcastBreakEvent(EquipmentSlot.MAINHAND);
 		});
 		
-		
-		//Capability class to be used as a timer. Tick event this capability is used with is done with player tick, therefore nothing happens if weapon is dropped
+		//Capability class to be used as a timer. Note that ticker used here is ticked in player tick, thus it stops ticking when item is dropped
+		//TO DO: make it tick in a more general tick event
 		thisitem.getCapability(TickProvider.TICKCAPABILITY).ifPresent(ticker -> {
 			ticker.addEntity(enemyEntity);
-			
 		});
 			
-	    return true;
+	    return true; //i have no clue wtf this does
 	}
 
 }

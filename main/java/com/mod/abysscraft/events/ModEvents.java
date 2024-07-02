@@ -2,15 +2,19 @@ package com.mod.abysscraft.events;
 
 import com.mod.abysscraft.AbyssCraft;
 import com.mod.abysscraft.Capabilities.TickProvider;
+import com.mod.abysscraft.GUI.InfoScreen;
 import com.mod.abysscraft.abyss.PlayerEffects;
 import com.mod.abysscraft.abyss.PlayerEffectsProvider;
+import com.mod.abysscraft.init.SoundInit;
 import com.mod.abysscraft.items.BlazeWeapon;
+import com.mod.abysscraft.world.dimensions.CustomDimension;
 import com.mojang.authlib.minecraft.client.MinecraftClient;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -123,9 +127,22 @@ public class ModEvents {
 	}
 	
 	@SubscribeEvent
+	public static void onPlayerDimensionChange(PlayerEvent.PlayerChangedDimensionEvent event) {
+		
+		//layer one event music
+		if (CustomDimension.LAYERONE_DIM_TYPE == event.getEntity().level().dimensionTypeId()) {
+			Minecraft.getInstance().getSoundManager().stop(); //stop all previous music from playing
+			event.getEntity().level().playSound(null, event.getEntity().getX(), event.getEntity().getY(), event.getEntity().getZ(), SoundInit.TELEPORT_TO_FIRST_LAYER.get() , SoundSource.PLAYERS, 100.0f, 1.0f);
+		}
+	}
+	
+
+	@SuppressWarnings("resource")
+	@SubscribeEvent
 	public static void onPlayerTick(TickEvent.PlayerTickEvent event) {
 		if (event.side == LogicalSide.SERVER) {
 			event.player.getCapability(PlayerEffectsProvider.PLAYER_EFFECTS).ifPresent(playereffects -> {
+
 				
 				Level world = event.player.level();
 				
@@ -133,6 +150,8 @@ public class ModEvents {
 				
 			});
 			
+			
+			//blaze weapon ticker add capability
 			for(int i = 0; i < event.player.getInventory().getContainerSize(); i++){
 			    if(event.player.getInventory().getItem(i).getItem() instanceof BlazeWeapon){
 			    	event.player.getInventory().getItem(i).getCapability(TickProvider.TICKCAPABILITY).ifPresent(ticker -> {
@@ -141,10 +160,12 @@ public class ModEvents {
 						
 					});
 			    }
-			}
+			}	
 		}
 		
 		
 	}
+	
+	 
 
 }

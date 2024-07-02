@@ -29,11 +29,21 @@ public class PlayerEffects {
 	private int currentHeight;
 	private int deltaHeight = 0;
 	private final int threshold = -10;
+	private int actualHeight;
 	
 	//private boolean reachedThreshold = false;
 	
+	public int getDeltaHeight () {
+		System.out.println(deltaHeight);
+		return this.deltaHeight;
+	}
+	
+	public int getActualHeight() {
+		return this.actualHeight;
+	}
 	
 	public void setCurrentHeight(Level World, Player player) {
+		this.actualHeight = player.getBlockY();
 		
 		this.previousHeight = this.currentHeight;
 		this.currentHeight = player.getBlockY();
@@ -46,7 +56,7 @@ public class PlayerEffects {
 		}
 		
 		if(CustomDimension.LAYERONE_DIM_TYPE == player.level().dimensionTypeId()){ //for if i switch to checking dimensions instead of height
-
+			this.actualHeight = player.getBlockY()-500; //to get actual relative height from abyss
 		}
 		
 		
@@ -56,10 +66,6 @@ public class PlayerEffects {
 			if (this.currentHeight < 0 && this.currentHeight >= -100) {
 				
 				player.displayClientMessage(Component.literal("Curse of the Abyss first layer effects triggered"), true);
-				
-				//debug music
-				Minecraft.getInstance().getSoundManager().stop(); //stop all previous music from playing
-				player.level().playSound(null, player.getX(), player.getY(), player.getZ(), SoundInit.TELEPORT_TO_FIRST_LAYER.get() , SoundSource.PLAYERS, 100.0f, 1.0f);
 				
 				player.addEffect((new MobEffectInstance(MobEffects.WEAKNESS, 200, 0, false, true, true)), player); //layer 0 effect
 
@@ -81,7 +87,7 @@ public class PlayerEffects {
 		
 		
 		
-		System.out.println(deltaHeight);
+		//System.out.println(deltaHeight);
 		
 	}
 	

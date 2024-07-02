@@ -1,13 +1,16 @@
 package com.mod.abysscraft.items;
 
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 
 import com.mod.abysscraft.world.CustomTeleporter;
 import com.mod.abysscraft.world.dimensions.CustomDimension;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -17,6 +20,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.RelativeMovement;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -34,16 +38,21 @@ public class LayerOneTeleportationRod extends Item{
 	public InteractionResultHolder<ItemStack> use(Level world, Player player, InteractionHand hand){
 		
 		if (player.level() instanceof ServerLevel serverlevel) {
-			MinecraftServer minecraftserver = serverlevel.getServer();
+			MinecraftServer minecraftserver = world.getServer();
 			
-			//YO wtf is this syntax?????
-			ResourceKey<Level> resourcekey = player.level().dimension() == CustomDimension.LAYERONE_LEVEL_KEY?
-					Level.OVERWORLD: CustomDimension.LAYERONE_LEVEL_KEY;
+
 			
 			
-			ServerLevel newDimension = minecraftserver.getLevel(resourcekey);
+			//ServerLevel newDimension = minecraftserver.getLevel(DIMENSIONS.END);
 			
-			player.teleportTo(newDimension, 0, 100, 0, null, 0, 0);
+			Set<RelativeMovement> setTemp = new HashSet<RelativeMovement>();
+			setTemp.add(RelativeMovement.X);
+			
+			//System.out.println(newDimension);
+			
+			//player.teleportTo(newDimension, 1, 200, 1, setTemp, 0, 0);
+			//player.changeDimension(newDimension);
+
 
 			/*
 			if (newDimension != null && !player.isPassenger()) {

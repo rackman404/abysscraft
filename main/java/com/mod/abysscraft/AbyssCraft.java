@@ -34,6 +34,7 @@ import org.slf4j.Logger;
 
 import com.mod.abysscraft.init.SoundInit;
 import com.mod.abysscraft.init.WorldGenInit;
+import com.mod.abysscraft.GUI.MainOverlay;
 import com.mod.abysscraft.init.ItemInit;
 import com.mod.abysscraft.init.MobInit;
 
